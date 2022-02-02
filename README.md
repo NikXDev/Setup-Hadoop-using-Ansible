@@ -37,4 +37,5 @@ Using the master's IP address, user can access the Hadoop WebUI.
 ```
 
 Configure and set-up the steps as described in the files and we are done.<br>
+To read more about the topics, visit --> [Hadoop](https://niharicka.medium.com/task-7-1-elasticity-task-9961c30d274b) & [Ansible](https://www.linkedin.com/posts/niharikadh_automation-with-ansible-activity-6739485952101679104-koZF) 
 THANK YOU!
