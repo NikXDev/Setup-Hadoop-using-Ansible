@@ -1,0 +1,44 @@
+- hosts: all
+  vars:
+          - nn: /root/workspace_ansible
+  tasks:
+  - name: Copying hadoop software
+    copy:
+       src: /root/hadoop-1.2.1-1.x86_64.rpm
+       dest: /root/
+       
+  - name: Copying JDK software
+    copy:
+       src: /root/ansible/jdk-8u171-linux-x64.rpm
+       dest: /root/
+       
+  - name: Installing JDK software
+    package:
+         name: jdk-8u171-linux-x64.rpm
+         disable_gpg_check: yes
+         shell: rpm -ivh jdk-8u171-linux-x64.rpm --nobest
+   
+  - name: Installing Hadoop software
+    shell: rpm -ivh hadoop-1.2.1-1.x86_64.rpm --force
+    ignore_errors: yes
+    
+  - name: HDFS-site.xml file 
+    template:
+       src: /root/workspace_ansible/name-hdfs.txt
+       dest: /etc/hadoop/hdfs-site.xml
+       
+  - name: Core-site.xml file
+    template:
+            src: /root/workspace_ansible/name-core.txt
+            dest: /etc/hadoop/core-site.xml
+            
+  - name: Create directory to share over hdfs network
+    file:
+            path: "{{nn}}"
+            state: directory
+            
+  - name: Format the name node to start it
+    shell: hadoop namenode -format
+    
+  - name: Starting the Master node
+    shell: hadoop-daemon.sh start namenode
